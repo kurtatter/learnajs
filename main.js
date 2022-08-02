@@ -32,6 +32,16 @@ app.filter('moneyFilter', function () {
     };
 });
 
+app.directive('currentDatetime', function () {
+    return {
+        restrict: 'EACM',
+        link: function (scope, element, attrs) {
+            console.log(Date());
+            element.text(Date())
+        }
+    }
+});
+
 app.controller('travelCtrl', function (UserFactory) {
     this.price = 99;
     this.UserFactory = UserFactory;
