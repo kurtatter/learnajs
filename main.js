@@ -94,6 +94,13 @@ app.directive('dollar', function () {
             })
         }
     }
+});
+
+app.directive('commentForm', function () {
+    return {
+        restrict: 'E',
+        templateUrl: '_comment-form.html'
+    }
 })
 
 app.controller('travelCtrl', function (UserFactory) {
