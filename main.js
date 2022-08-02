@@ -42,6 +42,36 @@ app.directive('currentDatetime', function () {
     }
 });
 
+app.directive('way', function () {
+    return {
+        restrict: 'E',
+        template: '<h4>I did it my way</h4><i>quote: {{ quote }}</i><br><br><b><i>songs:</i></b><br><div ng-repeat="song in songs">{{ song.title }}</div>',
+        link: function (scope, element, attrs) {
+            console.log('My way!');
+            scope.quote = "That's life!";
+            scope.songs = [
+                {
+                    id: 1,
+                    title: 'That\'s life'
+                },
+                {
+                    id: 2,
+                    title: 'Fly me to the moon'
+                },
+                {
+                    id: 3,
+                    title: 'My way'
+                },
+                {
+                    id: 4,
+                    title: 'Strangers in the Night'
+                }
+            ];
+
+        }
+    }
+});
+
 app.controller('travelCtrl', function (UserFactory) {
     this.price = 99;
     this.UserFactory = UserFactory;
