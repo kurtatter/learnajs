@@ -1,116 +1,16 @@
 let app = angular.module('app', []);
 
-app.factory('UserFactory', function () {
+app.controller('mainCtrl', function ($scope) {
+    $scope.posts = [];
+    $scope.name = 'Main Controller'
+});
+
+app.directive('post', function () {
     return {
-        name: 'Sam Flynn'
-    }
-});
-
-app.directive('hawaii', function () {
-    return function (scope, element, attrs) {
-        element.text('Hawaii');
-        element.on('click', function () {
-            element.text(element.text() === 'Hawaii' ? 'USA' : 'Hawaii');
-        });
-    };
-});
-
-app.directive('london', function() {
-    return {
-        link: function (scope, element, attrs) {
-            element.text('London');
-            element.on('click', function() {
-                element.text(element.text() === 'London' ? 'England' : 'London');
-            });
-        }
-    };
-});
-
-app.filter('moneyFilter', function () {
-    return function (str) {
-        return '$' + str;
-    };
-});
-
-app.directive('currentDatetime', function () {
-    return {
-        restrict: 'EACM',
-        link: function (scope, element, attrs) {
-            console.log(Date());
-            element.text(Date())
+        scope: true, // использовать свой внутренний scope, а не scope контроллера в котором он инициализирован
+        link: function (scope, element, attrs, ctrl, transparent) {
+            console.log('scope', scope);
+            scope.name = 'post directive'
         }
     }
-});
-
-app.directive('way', function () {
-    return {
-        restrict: 'E',
-        template: '<h4>I did it my way</h4><i>quote: {{ quote }}</i><br><br><b><i>songs:</i></b><br><div ng-repeat="song in songs">{{ song.title }}</div>',
-        link: function (scope, element, attrs) {
-            console.log('My way!');
-            scope.quote = "That's life!";
-            scope.songs = [
-                {
-                    id: 1,
-                    title: 'That\'s life'
-                },
-                {
-                    id: 2,
-                    title: 'Fly me to the moon'
-                },
-                {
-                    id: 3,
-                    title: 'My way'
-                },
-                {
-                    id: 4,
-                    title: 'Strangers in the Night'
-                }
-            ];
-
-        }
-    }
-});
-
-app.directive('road', function () {
-    return {
-        restrict: 'E',
-        template: '<strong>It is road, <ng-transclude></ng-transclude>!</strong>',
-        transclude: true,
-        link: function (scope, element, attrs, ctrl, transclude) {
-            scope.is_song = true;
-        }
-    }
-});
-
-app.directive('dollar', function () {
-    return {
-        restrict: 'E',
-        template: '<strong>$</strong>',
-        transclude: true,
-        link: function(scope, element, attrs, ctrl, transclude) {
-            transclude (scope, function (clone, scope) {
-                element.append(clone)
-            })
-        }
-    }
-});
-
-app.directive('commentForm', function ($templateCache) {
-    return {
-        restrict: 'E',
-        templateUrl: '_comment-form.html',
-        link: function (scope, element, attrs, ctrl, transclude) {
-            console.log('cache', $templateCache.info());
-        }
-    }
-});
-
-app.run(function ($templateCache) {
-    $templateCache.put('_comment-form.html', '<form><textarea></textarea><br><input type="button" value="send"></input></form>')
-});
-
-app.controller('travelCtrl', function (UserFactory) {
-    this.price = 99;
-    this.UserFactory = UserFactory;
-});
+})
