@@ -96,12 +96,19 @@ app.directive('dollar', function () {
     }
 });
 
-app.directive('commentForm', function () {
+app.directive('commentForm', function ($templateCache) {
     return {
         restrict: 'E',
-        templateUrl: '_comment-form.html'
+        templateUrl: '_comment-form.html',
+        link: function (scope, element, attrs, ctrl, transclude) {
+            console.log('cache', $templateCache.info());
+        }
     }
-})
+});
+
+app.run(function ($templateCache) {
+    $templateCache.put('_comment-form.html', '<form><textarea></textarea><br><input type="button" value="send"></input></form>')
+});
 
 app.controller('travelCtrl', function (UserFactory) {
     this.price = 99;
