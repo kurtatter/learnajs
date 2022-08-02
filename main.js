@@ -72,6 +72,30 @@ app.directive('way', function () {
     }
 });
 
+app.directive('road', function () {
+    return {
+        restrict: 'E',
+        template: '<strong>It is road, <ng-transclude></ng-transclude>!</strong>',
+        transclude: true,
+        link: function (scope, element, attrs, ctrl, transclude) {
+            scope.is_song = true;
+        }
+    }
+});
+
+app.directive('dollar', function () {
+    return {
+        restrict: 'E',
+        template: '<strong>$</strong>',
+        transclude: true,
+        link: function(scope, element, attrs, ctrl, transclude) {
+            transclude (scope, function (clone, scope) {
+                element.append(clone)
+            })
+        }
+    }
+})
+
 app.controller('travelCtrl', function (UserFactory) {
     this.price = 99;
     this.UserFactory = UserFactory;
